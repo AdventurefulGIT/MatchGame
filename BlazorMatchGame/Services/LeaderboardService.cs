@@ -15,7 +15,7 @@ namespace BlazorMatchGame.Services
             _httpClient.BaseAddress = new Uri($"https://keepthescore.com/api/{credentialsService.GetLeaderboardKey()}/");
         }
 
-        public async Task<User> CreatePlayer(User player, string username)
+        public async Task CreatePlayer(User player, string username)
         {
             player.Username = username;
 
@@ -30,7 +30,7 @@ namespace BlazorMatchGame.Services
                     using (JsonDocument document = await JsonDocument.ParseAsync(stream))
                     {
                         player.ID = document.RootElement.GetProperty("player").GetProperty("id").GetInt32();
-                        return player;
+                        return;
                     }
                 }
             } 
@@ -58,7 +58,7 @@ namespace BlazorMatchGame.Services
             var playerData = new
             {
                 player_id = user.ID,
-                score = value - user.Score // Need to substract the score since API only permits increments.
+                score = value - user.Score // Need to substract the existing score since API only permits increments.
             };
 
             var content = new StringContent(JsonSerializer.Serialize(playerData), Encoding.UTF8, "application/json");

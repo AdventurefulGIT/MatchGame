@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using System.Timers
 @using BlazorMatchGame.Data
-@using BlazorMatchGame.Services
 
 @inject NavigationManager navigator;
 @inject User UserService;
@@ -91,6 +90,7 @@
             .ToList();
         matchesFound = 0;
         tenthsOfSecondsElapsed = 0;
+        StateHasChanged(); // Adding StateHasChanged to refresh state since it wasn't setting up properly after playing it the first time.
     }
 
     private async void ButtonClick(string animal, string animalDescription)
