@@ -92,12 +92,14 @@ namespace BlazorMatchGame.Services
                             {
                                 ID = player.GetProperty("id").GetInt32(),
                                 Username = player.GetProperty("name").GetString(),
-                                Score = player.GetProperty("score").GetInt32()
+                                Score = player.GetProperty("score").GetInt32(),
+                                Rank = player.GetProperty("rank").GetInt32()
                             });
                         }
                     }
                 }
-                return scoreboard.OrderBy(u => u.Score).ToList();
+                // Using Ranking system provided by KeepTheScore to match their leaderboard.
+                return scoreboard.OrderBy(u => u.Rank).ToList();
             }
             else
             {
