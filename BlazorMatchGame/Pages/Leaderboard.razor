@@ -1,7 +1,38 @@
 ﻿@page "/leaderboard"
+@using BlazorMatchGame.Data
+@using BlazorMatchGame.Services
+@inject User UserService
 
 <h3>Leaderboard</h3>
 
-@code {
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Player ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User player in PlayerList)
+        {
+            // Checks if user matches a player in the list to add a highlight.
+            <tr class="@(player.ID == UserService.ID ? "bg-opacity-25 bg-success" : "")">
+                <td>@player.ID</td>
+                <td>@player.Username</td>
+                <td>@((player.Score / 100 / 10F).ToString("0.0s"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
+@code {
+    [Inject] protected ILeaderboardService LeaderboardService { get; set; }
+
+    public List<User> PlayerList = new List<User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        PlayerList = await LeaderboardService.GetLeaderboard();
+    }
 }
