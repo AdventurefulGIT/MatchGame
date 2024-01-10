@@ -42,6 +42,14 @@
 
     private User tmpUser = new User(); // Creating a temporary user for data-binding.
 
+    protected override void OnInitialized()
+    {
+        if(UserService.Username != null)
+        {
+            navigator.NavigateTo("/");
+        }
+    }
+
     private async Task ContinueAsGuest()
     {
         var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to continue as a guest? Your score will not be saved on the leaderboard.");
