@@ -4,8 +4,9 @@
 @using System.Text.RegularExpressions
 
 @inject User UserService
+@inject CredentialsService Credentials
 
-<h3>Leaderboard</h3>
+<h3>Leaderboard - <a href="https://keepthescore.com/board/@(Credentials.GetLeaderboardKey())/">KeepTheScore</a></h3>
 
 <table class="table table-bordered">
     <thead>
